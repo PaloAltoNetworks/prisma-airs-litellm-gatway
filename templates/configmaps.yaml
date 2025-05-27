@@ -8,10 +8,10 @@ data:
       - model_name: vertex_ai/gemini-2.0-flash-lite-001
         litellm_params:
           model: vertex_ai/gemini-2.0-flash-lite-001
-          vertex_project: "panw-gcp-team-testing"
-          vertex_location: "us-central1"
+          vertex_project: "<gcp-project>"
+          vertex_location: "<gcp-region>"
     general_settings:
-      master_key: sk-litellm-master-key
+      master_key: <litellm-enterprise-master-key>
       drop_params: True
       set_verbose: True
     guardrails:

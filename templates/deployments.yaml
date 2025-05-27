@@ -28,7 +28,7 @@ spec:
                   key: airs_apikey
                   name: litellm-secrets
             - name: AIRS_PROFILE_NAME
-              value: "ai-profile-liteLLM-SB-test"
+              value: "<airs-profile>"
           ports:
             - containerPort: 4000
           args:
