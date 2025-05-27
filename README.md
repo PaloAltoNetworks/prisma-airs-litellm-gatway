@@ -202,7 +202,8 @@ curl --location 'http://litell-service/chat/completions' \
 }'
 ```
 
-Expected response after pre-guard
+`"Expected blocked response after pre-guard"`
+
 
 ```json
 {
@@ -250,7 +251,8 @@ curl --location 'http://litellm-service/chat/completions' \
    ]
 }'
 ```
-Expected response after pre-guard, with sucessfull call to model
+
+`"Expected sucessful call response after pre-guard"`
 
 ```json
 {
@@ -296,10 +298,9 @@ Expected response after pre-guard, with sucessfull call to model
 
 </Tabs>
 
-✨ This is an Enterprise only feature [Contact us to get a free trial](https://calendly.com/d/4mp-gd3-k5k/litellm-1-1-onboarding-chat)
 
 
-## **CustomGuardrail methods**
+## **CustomGuardrail method currently used ; more available to explore on litellm webpage**
 
 | Component | Description | Optional | Checked Data | Can Modify Input | Can Modify Output | Can Fail Call |
 |-----------|-------------|----------|--------------|------------------|-------------------|----------------|
