@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: litellm-config
+data:
+  config.yaml: |
+    model_list:
+      - model_name: vertex_ai/gemini-2.0-flash-lite-001
+        litellm_params:
+          model: vertex_ai/gemini-2.0-flash-lite-001
+          vertex_project: "<gcp-project>"
+          vertex_location: "<gcp-region>"
+    general_settings:
+      master_key: <litellm-enterprise-master-key>
+      drop_params: True
+      set_verbose: True
+    guardrails:
+    - guardrail_name: "custom-pre-guard"
+      litellm_params:
+        guardrail: airs_guardrail.myCustomGuardrail
+        mode: "pre_call"
+        default_on: true
+  airs_guardrail.py: {{ .Files.Get "airs_guardrail.py" | quote }}
