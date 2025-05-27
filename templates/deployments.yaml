@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: litellm-gateway
+  labels:
+    app: litellm-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: litellm-gateway
+  template:
+    metadata:
+      labels:
+        app: litellm-gateway
+    spec:
+      containers:
+        - name: litellm-gateway
+          image: ghcr.io/berriai/litellm:main-latest
+          env:
+            - name: AZURE_OPENAI_API_KEY
+              value: "123"
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/app/secret.json"
+            - name: AIRS_APIKEY
+              valueFrom:
+                secretKeyRef:
+                  key: airs_apikey
+                  name: litellm-secrets
+            - name: AIRS_PROFILE_NAME
+              value: "ai-profile-liteLLM-SB-test"
+          ports:
+            - containerPort: 4000
+          args:
+            - "--config"
+            - "/app/config.yaml"
+            - "--detailed_debug"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config.yaml
+              subPath: config.yaml
+            - name: config-volume
+              mountPath: /app/airs_guardrail.py
+              subPath: airs_guardrail.py
+            - name: litellm-secrets
+              mountPath: /app/secret.json
+              subPath: secret.json
+      volumes:
+        - name: config-volume
+          configMap:
+            name: litellm-config
+        - name: litellm-secrets
+          secret:
+            secretName: litellm-secrets
