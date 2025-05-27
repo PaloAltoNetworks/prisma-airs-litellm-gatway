@@ -1,9 +1,9 @@
 # prisma-airs-litellm-gatway
 PRISMA AIRS Guardrail insertion to litellm-gateway
 
-import Image from '@theme/IdealImage';
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+## Overview
+![alt text](image.svg)
+
 
 # Custom Guardrail
 
@@ -140,6 +140,7 @@ guardrails:
 <Tabs>
 <TabItem value="helm" label="helm install">
 
+```shell
 file structure:
 litellm
 ├── airs_guardrail.py
@@ -148,6 +149,7 @@ litellm
 │   ├── configmaps.yaml
 │   ├── deployments.yaml
 │   ├── secret.yaml
+```
 
 User would need following to be ingested in code
 1) AIRS API scan url > airs_guardrail.py
@@ -160,8 +162,9 @@ Mount your `airs_guardrail.py` on the LiteLLM helm deployement in configmaps
 
 This mounts your `airs_guardrail.py` file from your local directory to the `/app` directory in the Docker container, making it accessible to the LiteLLM Gateway.
 
-# Note --form a helm package--
+
 ```shell
+helm package [CHART_PATH]
 helm upgrade --install litellm-gateway litellm
 ```
 
@@ -174,6 +177,7 @@ helm upgrade --install litellm-gateway litellm
 #### Test `"custom-pre-guard"`
 
 <Tabs>
+
 ```shell
 curl --location 'http://litell-service/chat/completions' \
 --header 'Content-Type: application/json' \
@@ -195,9 +199,7 @@ curl --location 'http://litell-service/chat/completions' \
        "content": "This is a tests prompt with 72zf6.rxqfd.com/i8xps1 url"
      }
    ]
-}
-
-'
+}'
 ```
 
 Expected response after pre-guard
@@ -211,12 +213,19 @@ Expected response after pre-guard
         "code": "400"
     }
 }
-
 ```
+
 
 </TabItem>
 
-<TabItem label="Successful Call " value = "blocked">
+</Tabs>
+
+
+
+#### Test `"Successful Call"`
+
+<Tabs>
+
 
 ```shell
 curl --location 'http://litellm-service/chat/completions' \
@@ -241,6 +250,7 @@ curl --location 'http://litellm-service/chat/completions' \
    ]
 }'
 ```
+Expected response after pre-guard, with sucessfull call to model
 
 ```json
 {
